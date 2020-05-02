@@ -1,0 +1,291 @@
+<html>
+<head>
+  <script src='https://meet.jit.si/external_api.js'></script>
+  <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+</head>
+<body>
+
+  <h1>Meet testing again</h1>
+  <div id="meet"></div>
+  <table id="thetable">
+    <tr><th>Room</th><th>Count</th><th>Date</th></tr>
+  </table>
+  <script>
+
+    const rooms = ["SteerRoastHausLobby",
+"SteerRoastRoom104",
+"SteerRoastRoom105",
+"SteerRoastRoom106",
+"SteerRoastRoom107",
+"SteerRoastRoom108",
+"SteerRoastRoom109",
+"SteerRoastRoom110",
+"SteerRoastRoom111",
+"SteerRoastRoom112",
+"SteerRoastRoom113",
+"SteerRoastRoom114",
+"SteerRoastRoom115",
+"SteerRoastRoom116",
+"SteerRoastRoom140",
+"SteerRoastRoom142",
+"SteerRoastRoom143",
+"SteerRoastRoom146",
+"SteerRoastRoom147",
+"SteerRoastRoom148",
+"SteerRoastRoom149",
+"SteerRoastRoom150",
+"SteerRoastRoom151",
+"SteerRoastRoom153",
+"SteerRoastHousemasterApartment",
+"SteerRoastFirstWare",
+"SteerRoastFirstAtkinson",
+"SteerRoastFirstRunkle",
+"SteerRoastFirstHolman",
+"SteerRoastFirstNichols",
+"SteerRoastFirstCrafts",
+"SteerRoastKensOffice",
+"SteerRoastAlumRV",
+"DangerHousePokerNight",
+"SteerRoastRoom205",
+"SteerRoastRoom206A",
+"SteerRoastRoom206B",
+"SteerRoastRoom206C",
+"SteerRoastRoom206D",
+"SteerRoastRoom207",
+"SteerRoastRoom209",
+"SteerRoastRoom212A",
+"SteerRoastRoom212B",
+"SteerRoastRoom212C",
+"SteerRoastRoom218",
+"SteerRoastRoom219",
+"SteerRoastRoom220",
+"SteerRoastRoom221",
+"SteerRoastRoom222",
+"SteerRoastRoom224",
+"SteerRoastRoom228",
+"SteerRoastRoom233A",
+"SteerRoastRoom233B",
+"SteerRoastRoom233C",
+"SteerRoastRoom233D",
+"SteerRoastRoom233E",
+"SteerRoastRoom241",
+"SteerRoastRoom246",
+"SteerRoastRoom247",
+"SteerRoastRoom248",
+"SteerRoastRoom249",
+"SteerRoastRoom250",
+"SteerRoastRoom251",
+"SteerRoastRoom252",
+"SteerRoastRoom253",
+"SteerRoastRoom254",
+"SteerRoastRoom260",
+"SteerRoastRoom262",
+"SteerRoastSuite206",
+"SteerRoastSuite212",
+"SteerRoastSuite233",
+"SteerRoast2ndWARLounge",
+"SteerRoast2ndHNCLounge",
+"SteerRoastSecondWare",
+"SteerRoastSecondAtkinson",
+"SteerRoastSecondRunkle",
+"SteerRoastSecondHolman",
+"SteerRoastSecondNichols",
+"SteerRoastSecondCrafts",
+"SteerRoast2ndFloorBalcony",
+"SteerRoastRoom304",
+"SteerRoastRoom305",
+"SteerRoastRoom306",
+"SteerRoastRoom307",
+"SteerRoastRoom309",
+"SteerRoastRoom312A",
+"SteerRoastRoom312B",
+"SteerRoastRoom312C",
+"SteerRoastRoom318",
+"SteerRoastRoom319",
+"SteerRoastRoom320",
+"SteerRoastRoom322",
+"SteerRoastRoom324",
+"SteerRoastRoom328",
+"SteerRoastRoom333A",
+"SteerRoastRoom333B",
+"SteerRoastRoom333C",
+"SteerRoastRoom333D",
+"SteerRoastRoom333E",
+"SteerRoastRoom340",
+"SteerRoastRoom341",
+"SteerRoastRoom343",
+"SteerRoastRoom344",
+"SteerRoastRoom346",
+"SteerRoastRoom347",
+"SteerRoastRoom348",
+"SteerRoastRoom349",
+"SteerRoastRoom350",
+"SteerRoastRoom351",
+"SteerRoastRoom352",
+"SteerRoastRoom354",
+"SteerRoastRoom361",
+"SteerRoastRoom362",
+"SteerRoastRoom363",
+"SteerRoastRoom364",
+"SteerRoastRoom366A",
+"SteerRoastRoom366B",
+"SteerRoastRoom366C",
+"SteerRoastRoom366D",
+"SteerRoastSuite312",
+"SteerRoastSuite333",
+"SteerRoastSuite366",
+"SteerRoast3rdWARLounge",
+"SteerRoastRoom3rdHNCLounge",
+"SteerRoastThirdWare",
+"SteerRoastThirdAtkinson",
+"SteerRoastThirdRunkle",
+"SteerRoastThirdHolman",
+"SteerRoastThirdNichols",
+"SteerRoastThirdCrafts",
+"SteerRoastRoom404",
+"SteerRoastRoom405",
+"SteerRoastRoom406",
+"SteerRoastRoom407",
+"SteerRoastRoom408",
+"SteerRoastRoom409",
+"SteerRoastRoom414A",
+"SteerRoastRoom414B",
+"SteerRoastRoom414C",
+"SteerRoastRoom419",
+"SteerRoastRoom420",
+"SteerRoastRoom422",
+"SteerRoastRoom424",
+"SteerRoastRoom428",
+"SteerRoastRoom433A",
+"SteerRoastRoom433B",
+"SteerRoastRoom433C",
+"SteerRoastRoom433D",
+"SteerRoastRoom433E",
+"SteerRoastRoom441",
+"SteerRoastRoom446",
+"SteerRoastRoom447",
+"SteerRoastRoom448",
+"SteerRoastRoom449",
+"SteerRoastRoom450",
+"SteerRoastRoom451",
+"SteerRoastRoom452",
+"SteerRoastRoom454",
+"SteerRoastRoom462A",
+"SteerRoastRoom462B",
+"SteerRoastRoom462C",
+"SteerRoastRoom462D",
+"SteerRoastRoom462E",
+"SteerRoastSuite414",
+"SteerRoastSuite433",
+"SteerRoastSuite462",
+"SteerRoast4thWARLounge",
+"SteerRoast4thHNCLounge",
+"SteerRoastFourthWare",
+"SteerRoastFourthAtkinson",
+"SteerRoastFourthRunkle",
+"SteerRoastFourthHolman",
+"SteerRoastFourthNichols",
+"SteerRoastFourthCrafts",
+"SteerRoast4thFloorBalcony",
+"SteerRoast4thWareBalcony",
+"SteerRoast4thCraftsBalcony",
+"SteerRoastVomitorium",
+"SteerRoastHausRoof",
+"SteerRoastHausRoof",
+"SteerRoastRoom523",
+"SteerRoastRoom524",
+"SteerRoastRoom532",
+"SteerRoastTowersLounge",
+"SteerRoastTowersBalcony",
+"SteerRoastTowersShowerWithGoodPressure",
+"SteerRoastHausRoof",
+"SteerRoastHausRoof",
+"SteerRoastRoom623",
+"SteerRoastRoom624",
+"SteerRoastRoom626",
+"SteerRoastRoom629",
+"SteerRoastRoom630",
+"SteerRoastRoom631",
+"SteerRoastRoom632",
+"SteerRoastSixthRunkle",
+"SteerRoastTowersBunker",
+"SteerRoastTowersRoof",
+"SteerRoastTVRoom",
+"SteerRoastBasementMusic",
+"SteerRoastFlamingoLounge",
+"SteerRoastMusicRoom",
+"SteerRoast",
+"SteerRoastElevatorParty",
+"SteerRoastFeastNortheast",
+"SteerRoastFeastNorthwest",
+"SteerRoastFeastMideast",
+"SteerRoastFeastMidwest",
+"SteerRoastFeastSoutheast",
+"SteerRoastFeastSouthwest",
+"SteerRoastCourtyard",
+"SportDeskOnlyKenCanKillYou"];
+
+    var roomIndex = 0;
+
+    const domain = 'meet.jit.si';
+    const options = {
+      roomName: rooms[roomIndex],
+      width: 700,
+      height: 700,
+      parentNode: document.querySelector('#meet'),
+      config: {
+        startWithAudioMuted: true,
+        startAudioOnly: true
+      }
+    };
+var api = new JitsiMeetExternalAPI(domain, options);
+
+var handler;
+
+const nextRoom = () => {
+  api.executeCommand('hangup');
+  api.dispose();
+
+  ++roomIndex;
+  if (roomIndex >= rooms.length) {
+    console.log("Looping back to zero");
+    roomIndex = 0;
+  }
+  console.log("Room index " + roomIndex);
+
+  options.roomName = rooms[roomIndex];
+  api = new JitsiMeetExternalAPI(domain, options);
+  api.on("videoConferenceJoined", handler);
+};
+
+handler = (arg) => {
+  console.log("Got an event for join");
+  console.log(arg);
+  const numberOfParticipants = api.getNumberOfParticipants() - 1;
+  console.log("Number of participants in " + options.roomName + ": " + numberOfParticipants);
+  //$(document).append("<p>Number of participants in " + options.roomName + ": " + numberOfParticipants + "</p>");
+  if (numberOfParticipants >= 1) {
+    const date = new Date();
+    $("#thetable").append("<tr><td>" + options.roomName + "</td><td>" + numberOfParticipants + "</td><td>"+ date +"</td></tr>");
+  }
+  nextRoom();
+};
+api.on("videoConferenceJoined", handler);
+
+const passwordHandler = () => {
+  var room = rooms[roomIndex];
+  console.log("Password required for " + room);
+
+  const date = new Date();
+    $("#thetable").append("<tr><td>" + options.roomName + "</td><td>Password</td><td>"+ date +"</td></tr>");
+
+  nextRoom();
+};
+api.on("passwordRequired", passwordHandler);
+
+
+
+
+  </script>
+</body>
+</html>
