@@ -10,6 +10,29 @@
   <table id="thetable">
     <tr><th>Room</th><th>Count</th><th>Date</th></tr>
   </table>
+  <!-- Add the entire Firebase JavaScript SDK -->
+  <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase.js"></script>
+
+
+<script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyD1qqFVVGmCUwlkJq6GYsB87AJmXHfd29Y",
+      authDomain: "roast-attendance.firebaseapp.com",
+      databaseURL: "https://roast-attendance.firebaseio.com",
+      projectId: "roast-attendance",
+      storageBucket: "roast-attendance.appspot.com",
+      messagingSenderId: "1016587310297",
+      appId: "1:1016587310297:web:41164ee2a368e160c2dac8",
+      measurementId: "G-0WWCL661TZ"
+    };
+    // Initialize Firebase
+    var firebaseApp = firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    var database = firebase.database();
+  </script>
+
+
   <script>
 
     const rooms = ["SteerRoastHausLobby",
@@ -241,6 +264,7 @@
 var api = new JitsiMeetExternalAPI(domain, options);
 
 var handler;
+var passwordHandler;
 
 const nextRoom = () => {
   api.executeCommand('hangup');
@@ -256,23 +280,33 @@ const nextRoom = () => {
   options.roomName = rooms[roomIndex];
   api = new JitsiMeetExternalAPI(domain, options);
   api.on("videoConferenceJoined", handler);
+  api.on("passwordRequired", passwordHandler);
 };
+
+function saveRoom(roomName, numberOfParticipants) {
+  console.log("Number of participants in " + roomName + ": " + numberOfParticipants);
+  //$(document).append("<p>Number of participants in " + options.roomName + ": " + numberOfParticipants + "</p>");
+  const date = new Date();
+  if (numberOfParticipants >= 1) {
+    $("#thetable").append("<tr><td>" + roomName + "</td><td>" + numberOfParticipants + "</td><td>"+ date +"</td></tr>");
+  }
+
+  /*database.ref('rooms/' + roomName).set({
+    count: numberOfParticipants,
+    updated: date
+  });*/
+}
 
 handler = (arg) => {
   console.log("Got an event for join");
   console.log(arg);
   const numberOfParticipants = api.getNumberOfParticipants() - 1;
-  console.log("Number of participants in " + options.roomName + ": " + numberOfParticipants);
-  //$(document).append("<p>Number of participants in " + options.roomName + ": " + numberOfParticipants + "</p>");
-  if (numberOfParticipants >= 1) {
-    const date = new Date();
-    $("#thetable").append("<tr><td>" + options.roomName + "</td><td>" + numberOfParticipants + "</td><td>"+ date +"</td></tr>");
-  }
+  saveRoom(options.roomName, numberOfParticipants);
   nextRoom();
 };
 api.on("videoConferenceJoined", handler);
 
-const passwordHandler = () => {
+passwordHandler = () => {
   var room = rooms[roomIndex];
   console.log("Password required for " + room);
 
